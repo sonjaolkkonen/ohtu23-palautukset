@@ -13,11 +13,13 @@ def main():
             player = Player(player_dict)
             players.append(player)
 
+    sorted_players = sorted(players, key=lambda x: x.points, reverse=True)
+
     print("Players from FIN")
     print("")
 
-    for player in players:
-        print(player)
+    for player in sorted_players:
+        print(player)  
 
 if __name__ == "__main__":
     main()
