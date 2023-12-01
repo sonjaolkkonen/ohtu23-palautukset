@@ -3,12 +3,15 @@ class Sovelluslogiikka:
         self._arvo = arvo
 
     def miinus(self, operandi):
+        self.edellinen_arvo = self._arvo
         self._arvo = self._arvo - operandi
 
     def plus(self, operandi):
+        self.edellinen_arvo = self._arvo
         self._arvo = self._arvo + operandi
 
     def nollaa(self):
+        self.edellinen_arvo = self._arvo
         self._arvo = 0
 
     def aseta_arvo(self, arvo):
@@ -16,3 +19,6 @@ class Sovelluslogiikka:
 
     def arvo(self):
         return self._arvo
+    
+    def kumoa_edellinen(self):
+        self._arvo = self.edellinen_arvo

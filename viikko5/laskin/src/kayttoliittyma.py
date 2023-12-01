@@ -12,30 +12,55 @@ class Summa:
     def __init__(self, sovelluslogiikka, _lue_syote):
         self.sovelluslogiikka = sovelluslogiikka
         self._lue_syote = _lue_syote
+        self.edellinen_arvo = 0
 
     def suorita(self):
         try:
             arvo = int(self._lue_syote())
+            self.edellinen_arvo = self.sovelluslogiikka.arvo()
+            self.sovelluslogiikka.plus(arvo)
         except Exception:
             pass
+    
+    def kumoa(self):
+        self.sovelluslogiikka.aseta_arvo(self.edellinen_arvo)
 
 class Erotus:
     def __init__(self, sovelluslogiikka, _lue_syote):
         self.sovelluslogiikka = sovelluslogiikka
         self._lue_syote = _lue_syote
+        self.edellinen_arvo = 0
 
     def suorita(self):
         try:
             arvo = int(self._lue_syote())
+            self.edellinen_arvo = self.sovelluslogiikka.arvo()
+            self.sovelluslogiikka.miinus(arvo)
         except Exception:
             pass 
+
+    def kumoa(self):
+        self.sovelluslogiikka.aseta_arvo(self.edellinen_arvo)
 
 class Nollaus:
     def __init__(self, sovelluslogiikka, _lue_syote):
         self.sovelluslogiikka = sovelluslogiikka
+        self.edellinen_arvo = 0
 
     def suorita(self):
-        arvo = self.sovelluslogiikka.nollaa()
+        self.edellinen_arvo = self.sovelluslogiikka.arvo()
+        self.sovelluslogiikka.nollaa()
+
+    def kumoa(self):
+        self.sovelluslogiikka.aseta_arvo(self.edellinen_arvo)
+
+class Kumoa:
+    def __init__(self, sovelluslogiikka, _lue_syote):
+        self.sovelluslogiikka = sovelluslogiikka
+        
+    def suorita(self):
+        self.sovelluslogiikka.kumoa_edellinen()
+
 
 class Kayttoliittyma:
     def __init__(self, sovelluslogiikka, root):
@@ -46,7 +71,7 @@ class Kayttoliittyma:
             Komento.SUMMA: Summa(sovelluslogiikka, self._lue_syote),
             Komento.EROTUS: Erotus(sovelluslogiikka, self._lue_syote),
             Komento.NOLLAUS: Nollaus(sovelluslogiikka, self._lue_syote),
-            #Komento.KUMOA: Kumoa(sovelluslogiikka, self._lue_syote) # ei ehkä tarvita täällä...
+            Komento.KUMOA: Kumoa(sovelluslogiikka, self._lue_syote) # ei ehkä tarvita täällä...
         }
 
     def kaynnista(self):
